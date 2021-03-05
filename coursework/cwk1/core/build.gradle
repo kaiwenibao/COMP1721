@@ -1,0 +1,45 @@
+// Build script for core classes
+
+plugins {
+  id 'java-library'
+  id 'checkstyle'
+  id 'idea'
+}
+
+dependencies {
+  testImplementation (
+    'org.junit.jupiter:junit-jupiter-api:5.6.2',
+    'org.hamcrest:hamcrest:2.2'
+  )
+  testRuntimeOnly (
+    'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+  )
+}
+
+checkstyle {
+  showViolations false
+}
+
+idea {
+  module {
+    sourceDirs += file('src/main/java')
+    testSourceDirs += file('src/test/java')
+    inheritOutputDirs = false
+    outputDir = file('build/classes/java/main')
+    testOutputDir file('build/classes/java/test')
+  }
+}
+
+test {
+  useJUnitPlatform()
+
+  testLogging {
+    events 'PASSED', 'FAILED', 'SKIPPED'
+  }
+}
+
+task style {
+  group 'verification'
+  description 'Runs checkstyle on code of this project.'
+  dependsOn checkstyleMain
+}

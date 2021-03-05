@@ -1,0 +1,48 @@
+// Build script for advanced task
+
+plugins {
+  id 'java'
+  id 'checkstyle'
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.8'
+  id 'idea'
+}
+
+dependencies {
+  implementation project(':core')
+}
+
+checkstyle {
+  showViolations false
+}
+
+application {
+  mainClass = 'comp1721.cwk1.CovidChart'
+  // Comment out lines below if no command line argument is required
+  run {
+   description 'Runs this project on a data file.'
+   args '../datafiles/2020-daily.csv'
+  }
+}
+
+javafx {
+  // Change version to '15' if using Java 15
+  version = '11'
+  modules = [ 'javafx.controls' ]
+}
+
+idea {
+  module {
+    sourceDirs += file('src/main/java')
+    testSourceDirs += file('src/test/java')
+    inheritOutputDirs = false
+    outputDir = file('build/classes/java/main')
+    testOutputDir file('build/classes/java/test')
+  }
+}
+
+task style {
+  group 'verification'
+  description 'Runs checkstyle on code of this project.'
+  dependsOn checkstyleMain
+}

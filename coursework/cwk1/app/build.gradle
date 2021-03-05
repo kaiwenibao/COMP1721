@@ -1,0 +1,53 @@
+// Build script for application
+
+plugins {
+  id 'java'
+  id 'checkstyle'
+  id 'application'
+  id 'idea'
+}
+
+dependencies {
+  implementation project(':core')
+}
+
+checkstyle {
+  showViolations false
+}
+
+application {
+  mainClass = 'comp1721.cwk1.ActiveCases'
+  run {
+    description 'Runs this project on a data file.'
+    args ('../datafiles/2020-daily.csv', '../datafiles/2020-active.csv')
+    doFirst {
+      println "Running on ${args[0]}\n"
+    }
+    doLast {
+      println "\nOutput file written to ${args[1]}"
+    }
+  }
+}
+
+idea {
+  module {
+    sourceDirs += file('src/main/java')
+    testSourceDirs += file('src/test/java')
+    inheritOutputDirs = false
+    outputDir = file('build/classes/java/main')
+    testOutputDir file('build/classes/java/test')
+  }
+}
+
+task style {
+  group 'verification'
+  description 'Runs checkstyle on code of this project.'
+  dependsOn checkstyleMain
+}
+
+task runNoArgs(type: JavaExec) {
+  group 'application'
+  description 'Runs this project without command line arguments.'
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'comp1721.cwk1.ActiveCases'
+}

@@ -1,0 +1,23 @@
+// Master build script for COMP1721 Coursework 1
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+}
+
+task submission(type: Zip) {
+  group = 'Submission'
+  description = 'Generates Zip archive suitable for submission to Minerva.'
+
+  archiveFileName = 'cwk1.zip'
+  destinationDirectory = project.rootDir
+
+  from("$project.rootDir") {
+    exclude 'cwk1.zip', 'datafiles', '.idea', '**/.gradle', '**/build'
+  }
+
+  doLast {
+    logger.warn("cwk1.zip generated.")
+  }
+}

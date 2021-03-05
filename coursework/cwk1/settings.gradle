@@ -1,0 +1,4 @@
+rootProject.name = 'comp1721_cwk1'
+include 'core'
+include 'app'
+include 'chart'
