@@ -6,7 +6,7 @@ package comp1721.cwk1;
  * @author Nick Efford
  */
 public class DatasetException extends RuntimeException {
-  public DatasetException(String message) {
-    super(message);
-  }
+    public DatasetException(String message) {
+      super(message);
+    }
 }
